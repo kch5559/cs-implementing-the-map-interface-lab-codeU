@@ -64,6 +64,15 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	 */
 	private Entry findEntry(Object target) {
         // TODO: fill this in
+
+		Entry reuslt = null;
+		for(Entry myEntry : entries) {
+			Entry current = myEntry;
+			if(equals(current.getKey(), target)) {
+				return current;
+			}
+		}
+
 		return null;
 	}
 
@@ -99,7 +108,16 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	@Override
 	public V get(Object key) {
         // TODO: fill this in.
-		return null;
+
+		V result = null;
+
+		for(Entry currentEntry : entries) {
+			if(equals(currentEntry.getKey(), key)) {
+				result = currentEntry.getValue();
+				break;
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -119,7 +137,25 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	@Override
 	public V put(K key, V value) {
         // TODO: fill this in.
-        return null;
+		boolean exist = false;
+		V result = null;
+		Entry newEntry = new Entry(key, value);
+
+		for(Entry myEntries : entries) {
+			//when there already exsits the given key
+			if(equals(myEntries.getKey(), key)) {
+				exist = true;
+				myEntries.setValue(value);
+				break;
+			}
+		}
+
+		//if it doesn't exsist in the list
+		if(!exist) {
+			entries.add(new Entry(key, value));
+		}
+
+        return result;
 	}
 
 	@Override
@@ -132,7 +168,17 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	@Override
 	public V remove(Object key) {
         // TODO: fill this in.
-        return null;
+		V result = null;
+
+		for(Entry myEntries : entries) {
+			//when there already exsits mapping key in the list
+			if(equals(myEntries.getKey(), key)) {
+				result = myEntries.getValue();
+				entries.remove(myEntries);
+				break;
+			}
+		}
+        return result;
 	}
 
 	@Override
